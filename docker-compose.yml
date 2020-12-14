@@ -4,5 +4,6 @@ services:
     build: ./front
     volumes:
       - ./front:/usr/src/front
+    command: npm run dev
     ports:
-      - "8080:8080"
+      - 8080:8080
