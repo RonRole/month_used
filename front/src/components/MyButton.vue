@@ -1,16 +1,35 @@
 <template>
-    <button @click='sawai("ぷももえんぐえげぎぎおんもえちょっちょっちゃっさ！")'>{{greet}}</button>
+    <button @click='sawai'>{{data.text}}</button>
 </template>
 
 <script lang="ts">
-    import {defineComponent} from 'vue'
+    import {defineComponent, reactive} from 'vue'
+    
+    interface Props {
+        text: String
+    }
+
+    interface Data {
+        text: String
+    }
+    
     export default defineComponent({
-        props: {
-            greet: String,
+        props : {
+            text: {
+                type: String,
+                default: 'ぷももボタン'
+            }
         },
-        methods: {
-            sawai: (input:string) : void => {
-                alert(input)
+        setup(props: Props) {
+            const data = reactive({
+                text: props.text
+            })
+            const sawai = () : void => {
+                alert(data.text)
+            }
+            return {
+                data,
+                sawai,
             }
         }
     })
