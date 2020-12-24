@@ -1,4 +1,7 @@
 FROM node:latest
 WORKDIR /usr/src/front
-RUN npm install -g vue-cli
-RUN npm install -g webpack-dev-server
+RUN npm update -g npm
+RUN npm -g yarn
+RUN yarn global add @vue/cli
+COPY . .
+RUN yarn update
