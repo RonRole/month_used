@@ -61,7 +61,8 @@
         name: 'GarbageListItem',
         props: {
             targetDate: {
-                default: new Date()
+                default: () => new Date(),
+                required: true
             },
             activeDayNum: {
                 type: Number,

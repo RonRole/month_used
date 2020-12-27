@@ -11,7 +11,7 @@
             <tr>
                 <th scope="row">月</th>
                 <td>
-                    <GarbageListItem v-bind:activeDayNum=1>
+                    <GarbageListItem :targetDate=date :activeDayNum=1>
                         <p>【回収なし】</p>
                     </GarbageListItem>
                 </td>
@@ -23,7 +23,7 @@
                 <th scope="row">火</th>
                 <td>
                     <ul class="list-group">
-                        <GarbageListItem v-bind:activeDayNum=2>
+                        <GarbageListItem :targetDate=date :activeDayNum=2>
                             <p>一般ごみ</p>
                             <p>有害ごみ</p>
                         </GarbageListItem>
@@ -35,19 +35,19 @@
                 <th scope="row">水</th>
                 <td>
                     <ul class="list-group">
-                        <GarbageListItem v-bind:activeDayNum=3 v-bind:activeTimesOfDay=[1,3]>  
+                        <GarbageListItem :targetDate=date :activeDayNum=3 :activeTimesOfDay=[1,3]>  
                             <strong>第1, 第3</strong>
                             <p>プラスチック製包装容器</p>
                             <p>ペットボトル</p>
                             <p>繊維類</p>
                         </GarbageListItem>
-                        <GarbageListItem v-bind:activeDayNum=3 v-bind:activeTimesOfDay=[2,4]>
+                        <GarbageListItem :targetDate=date :activeDayNum=3 :activeTimesOfDay=[2,4]>
                             <strong>第2, 第4</strong>
                             <p>プラスチック製包装容器</p>
                             <p>びん</p>
                             <p>飲料かん</p>
                         </GarbageListItem>
-                        <GarbageListItem v-bind:activeDayNum=3 v-bind:activeTimesOfDay=[5]>
+                        <GarbageListItem :targetDate=date :activeDayNum=3 :activeTimesOfDay=[5]>
                             <strong>第5</strong>
                             <p>【回収なし】</p>
                         </GarbageListItem>
@@ -59,19 +59,19 @@
                 <th scope="row">木</th>
                 <td>
                     <ul class="list-group">
-                        <GarbageListItem v-bind:activeDayNum=4 v-bind:activeTimesOfDay=[1,3]>  
+                        <GarbageListItem :targetDate=date  :activeDayNum=4 :activeTimesOfDay=[1,3]>  
                             <strong>第1, 第3</strong>
                             <p>一般ごみ</p>
                             <p>有害ごみ</p>
                             <p>金属類</p>
                             <p>紙類</p>
                         </GarbageListItem>
-                        <GarbageListItem v-bind:activeDayNum=4 v-bind:activeTimesOfDay=[2,4]>
+                        <GarbageListItem :targetDate=date  :activeDayNum=4 :activeTimesOfDay=[2,4]>
                             <strong>第2, 第4</strong>
                             <p>一般ごみ</p>
                             <p>有害ごみ</p>
                         </GarbageListItem>
-                        <GarbageListItem v-bind:activeDayNum=4 v-bind:activeTimesOfDay=[5]>
+                        <GarbageListItem :targetDate=date  :activeDayNum=4 :activeTimesOfDay=[5]>
                             <strong>第5</strong>
                             <p>【回収なし】</p>
                         </GarbageListItem>
@@ -82,7 +82,7 @@
             <tr>
                 <th scope="row">金</th>
                 <td>
-                    <GarbageListItem v-bind:activeDayNum=5>
+                    <GarbageListItem :targetDate=date  :activeDayNum=5>
                         <p>【回収なし】</p>
                     </GarbageListItem>
                 </td>
@@ -96,10 +96,25 @@
 import {defineComponent} from 'vue'
 import GarbageListItem from '@/components/GarbageListItem.vue'
 
+interface Props {
+    targetDate: Date
+}
 export default defineComponent({
     name: 'GarbageDayTable',
     components: {
         GarbageListItem
+    },
+    props: {
+        targetDate: {
+            default: () => new Date(2020,11,28),
+            required: true
+        }
+    },
+    setup(props: Props) {
+        const date = props.targetDate
+        return {
+            date
+        }
     }
 })
 </script>
