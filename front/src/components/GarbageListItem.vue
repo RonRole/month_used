@@ -7,14 +7,12 @@
 <script lang="ts">
     import { defineComponent } from "vue";
 
-    type Day = 0 | 1 | 2 | 3 | 4 | 5 | 6
-
     class ActiveDay {
         private date : Date;
-        private activeDay : Day;
-        private activeTimesOfDay : Number[] 
+        private activeDay : Number;
+        private activeTimesOfDay : Array<Number> 
 
-        constructor(date: Date, activeDay : Day, activeTimesOfDay : Number[]) {
+        constructor(date: Date, activeDay : Number, activeTimesOfDay : Array<Number>) {
             this.date = date;
             this.activeDay = activeDay;
             this.activeTimesOfDay = activeTimesOfDay;
@@ -28,7 +26,7 @@
             return isActiveDay && isActiveTimesOfMonth
         }
 
-        private isDayOf(day : Day) : Boolean {
+        private isDayOf(day : Number) : Boolean {
             return day === this.date.getDay()
         }
 
@@ -55,23 +53,22 @@
 
     interface Props {
         targetDate: Date,
-        activeDayNum: Day,
-        activeTimesOfDay: Number[]
+        activeDayNum: Number,
+        activeTimesOfDay: Array<Number>
     }
 
     export default defineComponent({
         name: 'GarbageListItem',
         props: {
             targetDate: {
-                type: Date,
                 default: new Date()
             },
             activeDayNum: {
                 type: Number,
-                required: true
+                required: true,
+                validator: val => [0,1,2,3,4,5,6].some(e => e === val)
             },
             activeTimesOfDay: {
-                type: Array,
                 default: () => [1,2,3,4,5]
             }
         },
