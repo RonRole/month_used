@@ -1,11 +1,11 @@
 <template>
-    <li v-bind:class="['list-group-item',{'active':data.isActive}]">
+    <li v-bind:class="['list-group-item',{'active':isActive}]">
         <slot />
-    </li>
+    </li>    
 </template>
 
 <script lang="ts">
-    import { defineComponent } from "vue";
+    import { computed, defineComponent, PropType } from "vue";
 
     class ActiveDay {
         private date : Date;
@@ -61,6 +61,7 @@
         name: 'GarbageListItem',
         props: {
             targetDate: {
+                type: Object as PropType<Date>,
                 default: () => new Date(),
                 required: true
             },
@@ -74,12 +75,12 @@
             }
         },
         setup(props: Props) {
-            const today = new ActiveDay(props.targetDate, props.activeDayNum, props.activeTimesOfDay)
-            const data = {
-                isActive: today.isActive()
-            }
+            const isActive = computed(() => {
+                const activeDay = new ActiveDay(props.targetDate, props.activeDayNum, props.activeTimesOfDay)
+                return activeDay.isActive()
+            })
             return {
-                data
+                isActive,
             }
         }
     })
